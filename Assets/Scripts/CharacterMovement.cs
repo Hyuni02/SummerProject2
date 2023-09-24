@@ -11,7 +11,8 @@ public class CharacterMovement : MonoBehaviour
     CharacterEvent characterEvent;
 
     Vector3 velocity;
-    Vector3 horiMove;
+    public Vector3 horiMove;
+    public bool jump;
     float gravity = -9.8f * 3;
 
     private void Start() {
@@ -36,11 +37,15 @@ public class CharacterMovement : MonoBehaviour
         //점프 입력
         if (Input.GetKeyDown(KeyCode.Space) && characterState.isGrouned) {
             characterEvent.act_Jump?.Invoke();
+            jump = true;
             velocity.y = Mathf.Sqrt(characterState.jumpPower * characterBuffs.con_jump * -3.0f * gravity);
         }
 
         velocity.y += gravity * Time.deltaTime;
-        if (characterState.isGrouned && velocity.y < -0.01f) velocity.y = -0.01f;
+        if (characterState.isGrouned && velocity.y < -0.01f) {
+            velocity.y = -0.01f;
+            jump = false;
+        }
         characterController.Move(velocity * Time.deltaTime);
 
     }
