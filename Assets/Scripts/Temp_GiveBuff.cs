@@ -11,16 +11,19 @@ public class Temp_GiveBuff : MonoBehaviour
     public BuffType type;
     private void OnTriggerEnter(Collider other) {
 
-        GameObject buff = Instantiate(prefab);
-        Buff b= buff.GetComponent<Buff>();
-        b.name = "Speed + 50%";
-        b.bf_name = b.name;
-        b.buffType = type;
-        b.value = value;
-        b.duration = 5;
+        if (other.CompareTag("Player")) {
 
-        other.GetComponent<CharacterBuffs>().GetBuff(buff);
+            GameObject buff = Instantiate(prefab);
+            Buff b = buff.GetComponent<Buff>();
+            b.name = "Speed + 50%";
+            b.bf_name = b.name;
+            b.buffType = type;
+            b.value = value;
+            b.duration = 5;
 
-        Destroy(gameObject);
+            other.GetComponent<CharacterBuffs>().GetBuff(buff);
+
+            Destroy(gameObject);
+        }
     }
 }

@@ -15,6 +15,14 @@ public class CharacterInventory : MonoBehaviour
         characterInteraction = GetComponent<CharacterInteraction>();
     }
 
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.Q)) {
+            if(lst_Invnetory.Count > 0) {
+                DiscardItem(lst_Invnetory[0]);
+            }
+        }
+    }
+
     public void AddToInventory(GameObject item) {
         lst_Invnetory.Add(item);
         Debug.LogWarning("인벤토리 내 아이템 추가 불완전 구현");
@@ -31,8 +39,10 @@ public class CharacterInventory : MonoBehaviour
             //장착 아이템 버리기
         }
         else {
-            //인벤에서 해당 아이템 버리기
+            RemoveFromInventory(item);
+            item.GetComponent<Item>().Discarded(transform);
         }
+        item.transform.SetParent(null);
     }
     public void EquipItem(GameObject item) {
         if(equiped_Weapon != null) {

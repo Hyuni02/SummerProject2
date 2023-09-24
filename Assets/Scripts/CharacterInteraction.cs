@@ -4,27 +4,15 @@ using UnityEngine;
 
 public class CharacterInteraction : MonoBehaviour
 {
-    public GameObject interactableItem;
+    public List<GameObject> interactableItem = new List<GameObject>();
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.E) && interactableItem != null) {
-            if (interactableItem.CompareTag("item")) {
-                interactableItem.GetComponent<Item>().Picked(gameObject);
+            if (interactableItem[0].CompareTag("item")) {
+                interactableItem[0].GetComponent<Item>().Picked(gameObject);
+                interactableItem.RemoveAt(0);
             }
         }
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("item")) {
-            interactableItem = other.gameObject;
-        }
-    }
-
-    private void OnTriggerExit(Collider other) {
-        if (other.CompareTag("item")) {
-            if(interactableItem == other.gameObject) {
-                interactableItem = null;
-            }
-        }
-    }
 }

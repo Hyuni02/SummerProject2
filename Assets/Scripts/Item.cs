@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public abstract class Item : MonoBehaviour
@@ -14,12 +15,20 @@ public abstract class Item : MonoBehaviour
         transform.parent = player.GetComponent<CharacterInventory>().Inventory;
     }
 
+    public virtual void Discarded(Transform pos) {
+        transform.position = pos.position;
+        Visible();
+    }
+
     public virtual void Invisible() {
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<BoxCollider>().enabled = false;
+        Destroy(GetComponent<Rigidbody>());
     }
     public virtual void Visible() {
         GetComponent<MeshRenderer>().enabled = true;
         GetComponent<BoxCollider>().enabled = true;
+        gameObject.AddComponent<Rigidbody>();
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
     }
 }
