@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public abstract class Item : MonoBehaviour
-{
+public abstract class Item : MonoBehaviour {
     public string itemName;
     public string description;
     public Sprite thumbnail;
@@ -21,14 +20,16 @@ public abstract class Item : MonoBehaviour
     }
 
     public virtual void Invisible() {
-        GetComponent<MeshRenderer>().enabled = false;
+        GetComponentInChildren<SpriteRenderer>().enabled = false;
         GetComponent<BoxCollider>().enabled = false;
         Destroy(GetComponent<Rigidbody>());
     }
-    public virtual void Visible() {
-        GetComponent<MeshRenderer>().enabled = true;
+    public virtual void Visible(bool equip = false) {
+        GetComponentInChildren<SpriteRenderer>().enabled = true;
         GetComponent<BoxCollider>().enabled = true;
-        gameObject.AddComponent<Rigidbody>();
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+        if (!equip) {
+            gameObject.AddComponent<Rigidbody>();
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
+        }
     }
 }

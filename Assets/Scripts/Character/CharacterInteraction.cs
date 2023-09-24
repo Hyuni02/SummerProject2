@@ -17,7 +17,7 @@ public class CharacterInteraction : MonoBehaviour
 
     private void Update() {
         //È¹Æ¯ Å° ÀÔ·Â ½Ã Ã¹ ¾ÆÀÌÅÛ¸¸ È¹µæ
-        if (Input.GetKeyDown(KeyCode.E) && interactableItem != null) {
+        if (Input.GetKeyDown(KeyCode.E) && interactableItem.Count > 0) {
             if (interactableItem[0].CompareTag("item")) {
                 interactableItem[0].GetComponent<Item>().Picked(gameObject);
                 interactableItem.RemoveAt(0);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,16 +12,34 @@ public class CharacterInventory : MonoBehaviour
 
     CharacterInteraction characterInteraction;
     CharacterEvent characterEvent;
+    CharacterAnimationController characterAnimationController;
 
     private void Start() {
         characterInteraction = GetComponent<CharacterInteraction>();
+        characterAnimationController = GetComponent<CharacterAnimationController>();
         characterEvent = GetComponent<CharacterEvent>();
     }
 
     private void Update() {
+        //빠른 아이템 버리기
         if(Input.GetKeyDown(KeyCode.Q)) {
             if(lst_Invnetory.Count > 0) {
                 DiscardItem(lst_Invnetory[0]);
+            }
+        }
+
+        //빠른 무기 교체
+        if(Input.GetKeyDown(KeyCode.R)) {
+            GameObject target = null;
+            try {
+                target = lst_Invnetory.Where(x => x.GetComponent<Weapon>() != null).First();
+            }
+            catch {
+                target = null;
+            }
+            if(target != null) {
+                EquipItem(target);
+                print("빠른 무기 교체");
             }
         }
     }
@@ -49,9 +68,13 @@ public class CharacterInventory : MonoBehaviour
     }
     public void EquipItem(GameObject item) {
         if(equiped_Weapon != null) {
-            AddToInventory(equiped_Weapon);
+            equiped_Weapon.GetComponent<Weapon>().Picked(gameObject);
         }
         equiped_Weapon = RemoveFromInventory(item);
+        equiped_Weapon.transform.SetParent(characterAnimationController.handPos);
+        equiped_Weapon.transform.position = characterAnimationController.handPos.position;
+        equiped_Weapon.transform.rotation = characterAnimationController.handPos.rotation;
+        equiped_Weapon.GetComponent<Weapon>().Visible(true);
     }
 
 }
