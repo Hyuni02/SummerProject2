@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterBuffs : MonoBehaviour
 {
+    public Transform Buffs;
     [Header("°á°ú°ª")]
     public float con_speed;
     public float con_dmg;
@@ -46,7 +47,7 @@ public class CharacterBuffs : MonoBehaviour
                 bf_jump.Add(buff);
                 break;
         }
-        buff.transform.parent = transform.Find("Buffs").transform;
+        buff.transform.parent = Buffs.transform;
     }
 
     float Calc_confficient(List<GameObject> list) {
