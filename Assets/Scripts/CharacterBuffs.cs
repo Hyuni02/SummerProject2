@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterBuffs : MonoBehaviour
 {
+    CharacterEvent characterEvent;
+
     public Transform Buffs;
     [Header("결과값")]
     public float con_speed;
@@ -14,6 +16,10 @@ public class CharacterBuffs : MonoBehaviour
     public List<GameObject> bf_speed = new List<GameObject>();
     public List<GameObject> bf_dmg = new List<GameObject>();
     public List<GameObject> bf_jump = new List<GameObject>();
+
+    private void Start() {
+        characterEvent = GetComponent<CharacterEvent>();
+    }
 
     private void Update() {
         con_speed = Mathf.Max(Calc_confficient(bf_speed), 0);
@@ -48,8 +54,10 @@ public class CharacterBuffs : MonoBehaviour
                 break;
         }
         buff.transform.parent = Buffs.transform;
+        characterEvent.act_GetBuff?.Invoke();
     }
 
+    //버프 계수 총합 계산
     float Calc_confficient(List<GameObject> list) {
         var total = 100;
         foreach (GameObject buff in list) {

@@ -10,9 +10,11 @@ public class CharacterInventory : MonoBehaviour
     public List<GameObject> lst_Invnetory = new List<GameObject>(); //인벤토리
 
     CharacterInteraction characterInteraction;
+    CharacterEvent characterEvent;
 
     private void Start() {
         characterInteraction = GetComponent<CharacterInteraction>();
+        characterEvent = GetComponent<CharacterEvent>();
     }
 
     private void Update() {
@@ -43,6 +45,7 @@ public class CharacterInventory : MonoBehaviour
             item.GetComponent<Item>().Discarded(transform);
         }
         item.transform.SetParent(null);
+        characterEvent.act_DiscardItem?.Invoke();
     }
     public void EquipItem(GameObject item) {
         if(equiped_Weapon != null) {
