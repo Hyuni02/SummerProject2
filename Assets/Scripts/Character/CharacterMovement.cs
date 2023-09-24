@@ -11,7 +11,9 @@ public class CharacterMovement : MonoBehaviour
     CharacterEvent characterEvent;
 
     Vector3 velocity;
+    [HideInInspector]
     public Vector3 horiMove;
+    [HideInInspector]
     public bool jump;
     float gravity = -9.8f * 3;
 

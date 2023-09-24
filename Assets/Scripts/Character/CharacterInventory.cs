@@ -46,18 +46,17 @@ public class CharacterInventory : MonoBehaviour
 
     public void AddToInventory(GameObject item) {
         lst_Invnetory.Add(item);
-        Debug.LogWarning("인벤토리 내 아이템 추가 불완전 구현");
+        print($"Add Item to Inventory : {item.GetComponent<Item>().itemName}");
     }
     public GameObject RemoveFromInventory(GameObject item) {
         lst_Invnetory.Remove(item);
-        Debug.LogWarning("인벤토리 내 아이템 제거 불완전 구현");
+        print($"Remove Item from Inventory : {item.GetComponent<Item>().itemName}");
         return item;
     }
     //버릴 아이템, 버릴 아이템이 장착중인 아이템인지
     public void DiscardItem(GameObject item, bool fromHand = false) {
-        //장착아이템 버리기 미구현
         if(fromHand) {
-            //장착 아이템 버리기
+            //장착 아이템 버리기 미구현
         }
         else {
             RemoveFromInventory(item);

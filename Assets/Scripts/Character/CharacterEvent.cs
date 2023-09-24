@@ -11,6 +11,8 @@ public class CharacterEvent : MonoBehaviour {
     public Action act_DiscardItem;
     public Action act_Die;
     public Action act_GetBuff;
+    public Action act_Dash;
+    public Action act_Landing;
 
     private void Start() {
         act_Move += debug_Move;
@@ -20,6 +22,7 @@ public class CharacterEvent : MonoBehaviour {
         act_DiscardItem += debug_DiscardItem;
         act_Die += debug_Die;
         act_GetBuff += debug_GetBuff;
+        act_Dash += debug_Dash;
     }
 
     void debug_Move() {
@@ -42,5 +45,8 @@ public class CharacterEvent : MonoBehaviour {
     }
     void debug_GetBuff() {
         print("event : GetBuff");
+    }
+    void debug_Dash() {
+        print("event : Dash");
     }
 }
